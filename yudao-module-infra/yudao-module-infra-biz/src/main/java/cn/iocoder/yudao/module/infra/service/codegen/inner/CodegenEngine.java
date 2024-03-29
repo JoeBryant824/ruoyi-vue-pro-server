@@ -190,8 +190,10 @@ public class CodegenEngine {
     void initGlobalBindingMap() {
         // 全局配置
         globalBindingMap.put("basePackage", codegenProperties.getBasePackage());
-        globalBindingMap.put("baseFrameworkPackage", codegenProperties.getBasePackage()
-                + '.' + "framework"); // 用于后续获取测试类的 package 地址
+        globalBindingMap.put("baseDirPrefix", codegenProperties.getBaseDirPrefix());
+/*        globalBindingMap.put("baseFrameworkPackage", codegenProperties.getBasePackage()
+                + '.' + "framework"); // 用于后续获取测试类的 package 地址*/
+        globalBindingMap.put("baseFrameworkPackage", "cn.iocoder.yudao" + '.' + "framework"); // 用于后续获取测试类的 package 地址
         globalBindingMap.put("jakartaPackage", jakartaEnable ? "jakarta" : "javax");
         // 全局 Java Bean
         globalBindingMap.put("CommonResultClassName", CommonResult.class.getName());
@@ -413,6 +415,8 @@ public class CodegenEngine {
     private String formatFilePath(String filePath, Map<String, Object> bindingMap) {
         filePath = StrUtil.replace(filePath, "${basePackage}",
                 getStr(bindingMap, "basePackage").replaceAll("\\.", "/"));
+        filePath = StrUtil.replace(filePath, "${baseDirPrefix}",
+                getStr(bindingMap, "baseDirPrefix").replaceAll("\\.", "/"));
         filePath = StrUtil.replace(filePath, "${classNameVar}",
                 getStr(bindingMap, "classNameVar"));
         filePath = StrUtil.replace(filePath, "${simpleClassName}",
@@ -466,14 +470,20 @@ public class CodegenEngine {
     }
 
     private static String javaModuleFilePath(String path, String module, String src) {
-        return "yudao-module-${table.moduleName}/" + // 顶级模块
+        /*return "yudao-module-${table.moduleName}/" + // 顶级模块
                 "yudao-module-${table.moduleName}-" + module + "/" + // 子模块
+                "src/" + src + "/java/${basePackage}/module/${table.moduleName}/" + path + ".java";*/
+        return "${baseDirPrefix}-${table.moduleName}/" + // 顶级模块
+                "${baseDirPrefix}-${table.moduleName}-" + module + "/" + // 子模块
                 "src/" + src + "/java/${basePackage}/module/${table.moduleName}/" + path + ".java";
     }
 
     private static String mapperXmlFilePath() {
-        return "yudao-module-${table.moduleName}/" + // 顶级模块
+        /*return "yudao-module-${table.moduleName}/" + // 顶级模块
                 "yudao-module-${table.moduleName}-biz/" + // 子模块
+                "src/main/resources/mapper/${table.businessName}/${table.className}Mapper.xml";*/
+        return "${baseDirPrefix}-${table.moduleName}/" + // 顶级模块
+                "${baseDirPrefix}-${table.moduleName}-biz/" + // 子模块
                 "src/main/resources/mapper/${table.businessName}/${table.className}Mapper.xml";
     }
 

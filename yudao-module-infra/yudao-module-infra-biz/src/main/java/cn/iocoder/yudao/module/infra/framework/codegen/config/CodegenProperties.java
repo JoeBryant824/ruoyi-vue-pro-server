@@ -21,6 +21,12 @@ public class CodegenProperties {
     private String basePackage;
 
     /**
+     * 基础路径前缀
+     */
+    @NotNull(message = "基础路径前缀不能为空")
+    private String baseDirPrefix;
+
+    /**
      * 数据库名数组
      */
     @NotEmpty(message = "数据库不能为空")

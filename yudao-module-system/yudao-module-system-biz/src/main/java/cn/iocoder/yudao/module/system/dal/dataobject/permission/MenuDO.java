@@ -93,7 +93,7 @@ public class MenuDO extends BaseDO {
     /**
      * 是否缓存
      *
-     * 只有菜单、目录使用，否使用 Vue 路由的 keep-alive 特性
+     * 只有菜单使用，否使用 Vue 路由的 keep-alive 特性
      * 注意：如果开启缓存，则必须填写 {@link #componentName} 属性，否则无法缓存
      */
     private Boolean keepAlive;
